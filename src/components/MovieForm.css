@@ -1,0 +1,35 @@
+.movie-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.movie-form input {
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: border 0.3s ease;
+}
+
+.movie-form input:focus {
+  border-color: #0077ff;
+  outline: none;
+}
+
+.movie-form button {
+  grid-column: 1 / -1;
+  padding: 12px;
+  font-size: 16px;
+  background-color: #0077ff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.movie-form button:hover {
+  background-color: #005fcc;
+}
