@@ -1,54 +1,40 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import MovieForm from './components/MovieForm';
-import MovieList from './components/MovieList';
+import MovieTable from './components/MovieTable';
 import './style.css';
 
 function App() {
   const [movies, setMovies] = useState([]);
-  const [form, setForm] = useState({ title: '', releaseDate: '', budget: '', collection: '' });
-  const [editIndex, setEditIndex] = useState(null);
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (editIndex !== null) {
-      const updatedMovies = [...movies];
-      updatedMovies[editIndex] = form;
-      setMovies(updatedMovies);
-      setEditIndex(null);
-    } else {
-      setMovies([...movies, form]);
-    }
-    setForm({ title: '', releaseDate: '', budget: '', collection: '' });
-  };
-
-  const handleEdit = (index) => {
-    setForm(movies[index]);
-    setEditIndex(index);
-  };
-
-  const handleDelete = (index) => {
-    setMovies(movies.filter((_, i) => i !== index));
-  };
+  const [editMovie, setEditMovie] = useState(null);
 
   return (
-    <div className="app-container">
-      <h1>Movie CRUD App</h1>
-      <MovieForm
-        form={form}
-        onChange={handleChange}
-        onSubmit={handleSubmit}
-        isEditing={editIndex !== null}
-      />
-      <MovieList
-        movies={movies}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-      />
-    </div>
+    <Router>
+      <Routes>
+        <Route
+          path="/movies"
+          element={
+            <MovieTable
+              movies={movies}
+              setEditMovie={setEditMovie}
+              setMovies={setMovies}
+            />
+          }
+        />
+        <Route
+          path="/form"
+          element={
+            <MovieForm
+              movies={movies}
+              setMovies={setMovies}
+              editMovie={editMovie}
+              setEditMovie={setEditMovie}
+            />
+          }
+        />
+        <Route path="*" element={<Navigate to="/movies" />} />
+      </Routes>
+    </Router>
   );
 }
 
